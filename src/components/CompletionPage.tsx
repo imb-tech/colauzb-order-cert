@@ -29,7 +29,7 @@ const CompletionPage = ({ driverData, onStartNew }: CompletionPageProps) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false)
 
-  const certificateId = `XQ-${Date.now().toString().slice(-6)}`;
+  const [certificateId] = useState(() => `XQ-${Date.now().toString().slice(-6)}`)
 
   const handleDownload = async () => {
     setLoading(true)
@@ -136,8 +136,6 @@ const CompletionPage = ({ driverData, onStartNew }: CompletionPageProps) => {
               <ul className="text-sm text-muted-foreground space-y-1">
                 <li>• Ushbu sertifikat faqat bugungi kun uchun amal qiladi</li>
                 <li>• Zavod hududida barcha qoidalarga rioya qiling</li>
-                <li>• Favqulodda vaziyatlarda 112 raqamiga qo'ng'iroq qiling</li>
-                <li>• Sertifikat raqamini eslab qoling</li>
               </ul>
             </div>
           </CardContent>

@@ -44,8 +44,8 @@ const DriverForm = ({ onSubmit }: DriverFormProps) => {
               <Input
                 id="carNumber"
                 value={carNumber}
-                onChange={(e) => setCarNumber(e.target.value?.toUpperCase?.())}
-                placeholder="01A123BC"
+                onChange={(e) => setCarNumber(formatCarNumber(e.target.value))}
+                placeholder="01 A 123 BC"
                 className="text-lg px-4 py-2 rounded-xl outline-none"
                 required
                 name="truck_id"
@@ -83,3 +83,16 @@ const DriverForm = ({ onSubmit }: DriverFormProps) => {
 };
 
 export default DriverForm;
+
+export const formatCarNumber = (value?: string) => {
+  if (!value) return ""
+  const alphanumericOnly = value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase()
+  const firstTwo = alphanumericOnly.slice(0, 2)
+  const remaining = alphanumericOnly.slice(2)
+  const formattedRemaining = remaining.replace(
+    /([A-Za-z])(?=\d)|(\d)(?=[A-Za-z])/g,
+    "$1$2 ",
+  )
+  const result = `${firstTwo} ${formattedRemaining}`.trim()
+  return result.slice(0, 11).trim()
+}
