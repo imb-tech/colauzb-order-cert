@@ -74,7 +74,7 @@ const DigitalSignature = ({
     } catch (error) {
       toast({
         title: "Xatolik",
-        description: "Ma'lumot yuborishda muammo yuz berdi.",
+        description: JSON.stringify(error?.response),
         variant: "destructive",
       });
     } finally {
