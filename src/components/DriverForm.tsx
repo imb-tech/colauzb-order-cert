@@ -1,0 +1,85 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Truck, User } from "lucide-react";
+
+interface DriverFormProps {
+  onSubmit: (data: { carNumber: string; fullName: string }) => void;
+}
+
+const DriverForm = ({ onSubmit }: DriverFormProps) => {
+  const [carNumber, setCarNumber] = useState("");
+  const [fullName, setFullName] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (carNumber.trim() && fullName.trim()) {
+      onSubmit({ carNumber: carNumber.trim(), fullName: fullName.trim() });
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary flex items-center justify-center p-4">
+      <Card className="w-full max-w-md shadow-lg border-none rounded-3xl pb-4">
+        <CardHeader className="text-center space-y-4">
+          <div className="mx-auto w-16 h-16 bg-primary rounded-full flex items-center justify-center">
+            <Truck className="w-8 h-8 text-primary-foreground" />
+          </div>
+          <CardTitle className="text-2xl font-bold text-primary">
+            Xavfsizlik Instruktaji
+          </CardTitle>
+          <p className="text-muted-foreground">
+            Zavod hududiga kirish uchun ma'lumotlaringizni kiriting
+          </p>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="carNumber" className="flex items-center gap-2">
+                <Truck className="w-4 h-4" />
+                Mashina raqami
+              </Label>
+              <Input
+                id="carNumber"
+                value={carNumber}
+                onChange={(e) => setCarNumber(e.target.value?.toUpperCase?.())}
+                placeholder="01A123BC"
+                className="text-lg px-4 py-2 rounded-xl outline-none"
+                required
+                name="truck_id"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="fullName" className="flex items-center gap-2">
+                <User className="w-4 h-4" />
+                Ism va familiya
+              </Label>
+              <Input
+                id="fullName"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Ahmadjonov Jamshid"
+                className="text-plg x-4 py-2 rounded-xl outline-none"
+                name="full_name"
+                required
+              />
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full py-4 text-lg plg x-4 rounded-xl outline-none"
+              disabled={!carNumber.trim() || !fullName.trim()}
+            >
+              Boshlash
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default DriverForm;
