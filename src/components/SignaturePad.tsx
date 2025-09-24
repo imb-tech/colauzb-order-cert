@@ -28,7 +28,7 @@ const SignaturePadComponent = forwardRef<SignatureCanvas, Props>(
 
     return (
       <div className="h-[280px]">
-        <span>Buyerga imzo qo'ying</span>
+        <span className="text-center block">Buyerga imzo qo'ying</span>
         <SignatureCanvas
           ref={internalRef}
           onBegin={handleDrawEnd}
@@ -37,18 +37,18 @@ const SignaturePadComponent = forwardRef<SignatureCanvas, Props>(
             width: 300, // aniq width
             height: 200, // aniq height
             className:
-              "border border-gray-400 rounded bg-white", // ❌ w-full, h-[...] ni olib tashla!
+              "border border-gray-400 rounded bg-white mx-auto", // ❌ w-full, h-[...] ni olib tashla!
           }}
 
         />
 
         {isSigned && (
-          <div className="mt-2 flex justify-end gap-3 items-center w-full">
+          <div className="mt-2 flex justify-center gap-3 items-center w-full">
             <Button
               type="button"
               variant="destructive"
               onClick={clear}
-              className="px-4 py-2 sm:w-max w-full"
+              className="px-4 py-2 sm:w-max w-full max-w-[300px]"
             >
               Tozalash
             </Button>
