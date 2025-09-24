@@ -28,16 +28,18 @@ const SignaturePadComponent = forwardRef<SignatureCanvas, Props>(
 
     return (
       <div>
+        <span>Buyerga imzo qo'ying</span>
         <SignatureCanvas
           ref={internalRef}
           onBegin={handleDrawEnd}
           penColor="black"
           canvasProps={{
-            width,
-            height,
+            width: 300, // aniq width
+            height: 280, // aniq height
             className:
-              "border border-gray-400 rounded w-full lg:h-[150px] h-[150px] bg-white",
+              "border border-gray-400 rounded bg-white", // ❌ w-full, h-[...] ni olib tashla!
           }}
+
         />
 
         {isSigned && (
