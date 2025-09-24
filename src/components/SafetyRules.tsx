@@ -72,6 +72,7 @@ const SafetyRules = ({ driverData, onComplete, onBack }: SafetyRulesProps) => {
                   <span>{currentRule + 1}/{rules.length}</span>
                 </span>
               </div>
+              <img src={rule.image} alt="" className="rounded-md" />
               <CardTitle className="text-2xl mb-2 text-[#212529]">
                 {rule.title}
               </CardTitle>

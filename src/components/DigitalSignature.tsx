@@ -20,12 +20,14 @@ interface DigitalSignatureProps {
   driverData: { carNumber: string; fullName: string };
   onComplete: () => void;
   onBack: () => void;
+  lctn?: { lat: number; lng: number } | null
 }
 
 const DigitalSignature = ({
   driverData,
   onComplete,
   onBack,
+  lctn
 }: DigitalSignatureProps) => {
   const [agreed, setAgreed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,6 +56,10 @@ const DigitalSignature = ({
     formData.append("signature", blob, "signature.png");
     formData.append('full_name', driverData.fullName)
     formData.append('truck_number', driverData.carNumber?.split(' ').join(''))
+    if (lctn) {
+      formData.append('lat', lctn.lat.toString())
+      formData.append('lng', lctn.lng.toString())
+    }
 
     try {
       setIsSubmitting(true);
@@ -148,7 +154,7 @@ const DigitalSignature = ({
               <SignaturePadComponent ref={sigRef} />
 
               {/* Buttons */}
-              <div className="flex gap-4 pt-4">
+              <div className="flex gap-4">
                 <Button
                   type="button"
                   variant="outline"

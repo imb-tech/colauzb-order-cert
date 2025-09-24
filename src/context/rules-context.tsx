@@ -13,7 +13,7 @@ export default function RuleProvider({ children }: { children: ReactNode }) {
     async function getRules() {
         const resp = await http.get<Rule[]>('common/roles/')
         if (resp.status == 200) {
-            setRules(resp.data)
+            setRules(resp.data?.sort((a, b) => a.id - b.id))
         }
     }
 

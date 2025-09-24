@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DriverForm from "@/components/DriverForm";
 import SafetyRules from "@/components/SafetyRules";
 import DigitalSignature from "@/components/DigitalSignature";
@@ -14,6 +14,10 @@ interface DriverData {
 const Index = () => {
   const [currentStep, setCurrentStep] = useState<Step>("form");
   const [driverData, setDriverData] = useState<DriverData | null>(null);
+  const [lctn, setLocation] = useState<{ lat: number; lng: number } | null>(
+    null
+  )
+
 
   const handleFormSubmit = (data: DriverData) => {
     setDriverData(data);
@@ -41,6 +45,28 @@ const Index = () => {
     setCurrentStep("rules");
   };
 
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          setLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          })
+        },
+        (err) => console.log(err),
+        { enableHighAccuracy: true }
+      )
+
+      // cleanup → component unmount bo‘lsa kuzatuvni to‘xtatish
+      return () => navigator.geolocation.clearWatch(watchId)
+    } else {
+      console.log("Geolocation browserda mavjud emas")
+    }
+  }, [])
+
+  console.log(lctn);
+
   return (
     <>
       {currentStep === "form" && (
@@ -48,7 +74,7 @@ const Index = () => {
       )}
 
       {currentStep === "rules" && driverData && (
-        <SafetyRules 
+        <SafetyRules
           driverData={driverData}
           onComplete={handleRulesComplete}
           onBack={handleBackToForm}
@@ -56,15 +82,16 @@ const Index = () => {
       )}
 
       {currentStep === "signature" && driverData && (
-        <DigitalSignature 
+        <DigitalSignature
           driverData={driverData}
           onComplete={handleSignatureComplete}
           onBack={handleBackToRules}
+          lctn={lctn}
         />
       )}
 
       {currentStep === "complete" && driverData && (
-        <CompletionPage 
+        <CompletionPage
           driverData={driverData}
           onStartNew={handleStartNew}
         />
