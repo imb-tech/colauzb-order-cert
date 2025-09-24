@@ -33,6 +33,9 @@ const SafetyRules = ({ driverData, onComplete, onBack }: SafetyRulesProps) => {
   };
 
   const handlePrevious = () => {
+    if (currentRule == 0) {
+      window.location.reload()
+    }
     if (currentRule > 0) {
       setAcknowledgedRules(prev => {
         prev.delete(currentRule)
@@ -86,15 +89,13 @@ const SafetyRules = ({ driverData, onComplete, onBack }: SafetyRulesProps) => {
         </div>
 
         <div className="flex gap-4 justify-between py-3">
-          {currentRule > 0 ? (
-            <button
-              onClick={handlePrevious}
-              className="flex items-center gap-2 text-[#6c757d]"
-            >
-              <ChevronLeft size={22} />
-              <span className="text-sm">Oldingi</span>
-            </button>
-          ) : <p className="text-transparent">2</p>}
+          <button
+            onClick={handlePrevious}
+            className="flex items-center gap-2 text-[#6c757d]"
+          >
+            <ChevronLeft size={22} />
+            <span className="text-sm">Oldingi</span>
+          </button>
 
           {!isCurrentRuleAcknowledged ? (
             <Button
@@ -105,26 +106,9 @@ const SafetyRules = ({ driverData, onComplete, onBack }: SafetyRulesProps) => {
               <ChevronRight />
             </Button>
           ) : (
-            <div className="flex items-center gap-2 text-safety-green">
-              <CheckCircle2 className="w-5 h-5" />
-              <span className="font-medium">Tasdiqlandi</span>
-            </div>
-          )}
-        </div>
-        {/* Navigation & Complete */}
-        <div className="flex justify-between items-center py-3">
-          {!allRulesAcknowledged && <button
-            onClick={onBack}
-            className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full border border-gray-300 dark:border-gray-600 text-[#6c757d] font-medium hover:bg-gray-100 transition-colors"
-          >
-            <Pencil className="w-4 h-4" />
-            Ma'lumotlarni o'zgartirish
-          </button>}
-
-          {allRulesAcknowledged && (
             <Button
               onClick={onComplete}
-              className="flex items-center gap-2 bg-safety-green hover:bg-safety-green/90 w-full justify-center py-3 px-4 rounded-full"
+              className="flex items-center gap-2 bg-safety-green hover:bg-safety-green/90 justify-center py-3 px-4 rounded-full"
             >
               Imzo qo'yishga o'tish
               <ChevronRight className="w-5 h-5" />

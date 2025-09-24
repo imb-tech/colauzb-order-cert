@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DriverForm from "@/components/DriverForm";
 import SafetyRules from "@/components/SafetyRules";
 import DigitalSignature from "@/components/DigitalSignature";
 import CompletionPage from "@/components/CompletionPage";
+import { RulesContext } from "@/context/rules-context";
 
 type Step = "form" | "rules" | "signature" | "complete";
 
@@ -17,6 +18,7 @@ const Index = () => {
   const [lctn, setLocation] = useState<{ lat: number; lng: number } | null>(
     null
   )
+  const { rules } = useContext(RulesContext)
 
 
   const handleFormSubmit = (data: DriverData) => {
@@ -58,17 +60,14 @@ const Index = () => {
         { enableHighAccuracy: true }
       )
 
-      // cleanup → component unmount bo‘lsa kuzatuvni to‘xtatish
       return () => navigator.geolocation.clearWatch(watchId)
     } else {
       console.log("Geolocation browserda mavjud emas")
     }
   }, [])
 
-  console.log(lctn);
-
   return (
-    <>
+    rules.length ? <>
       {currentStep === "form" && (
         <DriverForm onSubmit={handleFormSubmit} />
       )}
@@ -96,7 +95,7 @@ const Index = () => {
           onStartNew={handleStartNew}
         />
       )}
-    </>
+    </> : ""
   );
 };
 
