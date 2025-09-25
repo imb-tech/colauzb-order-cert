@@ -1,7 +1,14 @@
 import http from "@/services/http";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
-const defaultValue: { rules: Rule[] } = {
+type State = {
+    rules: Rule[]
+    open?: boolean
+    setLang?: (v: string) => void
+    toggleLang?: () => void
+}
+
+const defaultValue: State = {
     rules: []
 }
 
@@ -9,6 +16,8 @@ export const RulesContext = createContext(defaultValue)
 
 export default function RuleProvider({ children }: { children: ReactNode }) {
     const [rules, setRules] = useState<Rule[]>([])
+    const [_, setLang] = useState('')
+    const [open, setOpen] = useState<boolean>(false)
 
     async function getRules() {
         const resp = await http.get<Rule[]>('common/roles/')
@@ -17,11 +26,17 @@ export default function RuleProvider({ children }: { children: ReactNode }) {
         }
     }
 
+    function toggleLang() {
+        setOpen(false)
+        getRules()
+    }
+
     useEffect(() => {
+        setOpen(true)
         getRules()
     }, [])
 
-    return <RulesContext.Provider value={{ rules }}>{children}</RulesContext.Provider>
+    return <RulesContext.Provider value={{ rules, setLang, toggleLang, open }}>{children}</RulesContext.Provider>
 }
 
 

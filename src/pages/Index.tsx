@@ -4,6 +4,8 @@ import SafetyRules from "@/components/SafetyRules";
 import DigitalSignature from "@/components/DigitalSignature";
 import CompletionPage from "@/components/CompletionPage";
 import { RulesContext } from "@/context/rules-context";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { LanguageModal } from "@/components/LanguageModal";
 
 type Step = "form" | "rules" | "signature" | "complete";
 
@@ -95,6 +97,8 @@ const Index = () => {
           onStartNew={handleStartNew}
         />
       )}
+
+      <LanguageModal />
     </> : ""
   );
 };

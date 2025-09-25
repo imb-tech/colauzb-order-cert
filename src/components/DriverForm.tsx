@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Truck, User } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface DriverFormProps {
   onSubmit: (data: { carNumber: string; fullName: string }) => void;
@@ -12,6 +13,7 @@ interface DriverFormProps {
 const DriverForm = ({ onSubmit }: DriverFormProps) => {
   const [carNumber, setCarNumber] = useState("");
   const [fullName, setFullName] = useState("");
+  const { t } = useTranslation()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,10 +30,10 @@ const DriverForm = ({ onSubmit }: DriverFormProps) => {
             <Truck className="w-8 h-8 text-primary-foreground" />
           </div>
           <CardTitle className="text-2xl font-bold text-primary">
-            Xavfsizlik Instruktaji
+            {t("Xavfsizlik Instruktaji")}
           </CardTitle>
           <p className="text-muted-foreground">
-            Zavod hududiga kirish uchun ma'lumotlaringizni kiriting
+            {t("Zavod hududiga kirish uchun ma'lumotlaringizni kiriting")}
           </p>
         </CardHeader>
         <CardContent>
@@ -39,7 +41,7 @@ const DriverForm = ({ onSubmit }: DriverFormProps) => {
             <div className="space-y-2">
               <Label htmlFor="carNumber" className="flex items-center gap-2">
                 <Truck className="w-4 h-4" />
-                Mashina raqami
+                {t("Mashina raqami")}
               </Label>
               <Input
                 id="carNumber"
@@ -55,13 +57,13 @@ const DriverForm = ({ onSubmit }: DriverFormProps) => {
             <div className="space-y-2">
               <Label htmlFor="fullName" className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                Ism va familiya
+                {t("Ism va familiya")}
               </Label>
               <Input
                 id="fullName"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="Ahmadjonov Jamshid"
+                placeholder={t("Ahmadjonov Jamshid")}
                 className="text-plg x-4 py-2 rounded-xl outline-none"
                 name="full_name"
                 required
@@ -73,7 +75,7 @@ const DriverForm = ({ onSubmit }: DriverFormProps) => {
               className="w-full py-4 text-lg plg x-4 rounded-xl outline-none"
               disabled={!carNumber.trim() || !fullName.trim()}
             >
-              Boshlash
+              {t("Boshlash")}
             </Button>
           </form>
         </CardContent>

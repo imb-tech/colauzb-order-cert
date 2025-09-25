@@ -15,6 +15,7 @@ import { toast } from "@/hooks/use-toast";
 import SignaturePadComponent, { base64ToBlob } from "./SignaturePad";
 import SignatureCanvas from "react-signature-canvas";
 import http from "@/services/http";
+import { useTranslation } from "react-i18next";
 
 interface DigitalSignatureProps {
   driverData: { carNumber: string; fullName: string };
@@ -32,6 +33,7 @@ const DigitalSignature = ({
   const [agreed, setAgreed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const sigRef = useRef<SignatureCanvas>(null);
+  const { t } = useTranslation()
 
   const currentDate = new Date().toLocaleDateString("uz-UZ", {
     year: "numeric",
@@ -71,16 +73,16 @@ const DigitalSignature = ({
       });
 
       toast({
-        title: "Muvaffaqiyat!",
+        title: t("Muvaffaqiyatli!"),
         description:
-          "Xavfsizlik instruktaji muvaffaqiyatli yakunlandi. Zavod hududiga kirishingiz mumkin.",
+          t("Xavfsizlik instruktaji muvaffaqiyatli yakunlandi. Zavod hududiga kirishingiz mumkin."),
       });
 
       onComplete();
     } catch (error) {
       toast({
-        title: "Xatolik",
-        description: error?.data ?? "Ma'lumotlarni yuborishda xatolik yuz berdi",
+        title: t("Xatolik"),
+        description: error?.data ?? t("Ma'lumotlarni yuborishda xatolik yuz berdi"),
         variant: "destructive",
       });
     } finally {
@@ -97,10 +99,10 @@ const DigitalSignature = ({
             <FileText className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-primary mb-2">
-            Elektron Imzo
+            {t('Elektron Imzo')}
           </h1>
           <p className="text-muted-foreground">
-            Xavfsizlik qoidalariga rioya qilish majburiyati
+            {t('Xavfsizlik qoidalariga rioya qilish majburiyati')}
           </p>
         </div>
 
@@ -108,7 +110,7 @@ const DigitalSignature = ({
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-safety-green" />
-              Instruktaj yakunlash
+              {t('Instruktaj yakunlash')}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -117,18 +119,18 @@ const DigitalSignature = ({
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">
-                  Haydovchi:
+                  {t('Haydovchi')}:
                 </span>
                 <span className="font-medium">{driverData.fullName}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Car className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Mashina:</span>
+                <span className="text-sm text-muted-foreground">{t('Mashina')}:</span>
                 <span className="font-medium">{driverData.carNumber}</span>
               </div>
               <div className="flex items-center gap-2 md:col-span-2">
                 <Calendar className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Sana:</span>
+                <span className="text-sm text-muted-foreground">{t('Sana')}:</span>
                 <span className="font-medium">{currentDate}</span>
               </div>
             </div>
@@ -162,7 +164,7 @@ const DigitalSignature = ({
                   className="flex items-center gap-2 rounded-full border-none"
                 >
                   <ArrowLeft className="w-4 h-4" />
-                  Boshiga
+                  {t('Boshiga')}
                 </Button>
 
                 <Button
@@ -178,7 +180,7 @@ const DigitalSignature = ({
                   ) : (
                     <>
                       <CheckCircle2 className="w-4 h-4 mr-2" />
-                      Yakunlash
+                      {t('Yakunlash')}
                     </>
                   )}
                 </Button>
