@@ -61,7 +61,7 @@ const CompletionPage = ({ driverData }: CompletionPageProps) => {
             {t('Muvaffaqiyatli!')}
           </h1>
           <p className="text-lg text-muted-foreground">
-            {t('Xavfsizlik instruktaji muvaffaqiyatli yakunlandi')}
+            {t('Xavfsizlik instruktaji muvaffaqiyatli yakunlandi.')}
           </p>
         </div>
 
